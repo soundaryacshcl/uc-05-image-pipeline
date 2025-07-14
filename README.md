@@ -34,10 +34,13 @@ Least-privilege IAM – a single role for Lambda with the minimum s3:GetObject, 
 Observability – CloudWatch Logs for the function plus CloudWatch metrics/alarms for failures or throttling.
 
 2 · Target Technology Stack
-Layer	Choice	Notes
-Storage	Amazon S3 (Standard or Intelligent-Tiering)	Source & destination buckets; versioning on for rollback
-Compute	AWS Lambda (Python 3.12 runtime)	Uses Pillow to resize; concurrency = “On-Demand” (scale to zero)
-Messaging	Amazon SNS	Email, SMS, or webhook subscribers
-IaC	Terraform ≥ 1.6 + AWS provider ≥ 5.0	Remote backend in S3 with DynamoDB state locking
-CI	GitHub Actions	Lints, validates, and plans before manual approval to apply
-Security & Quality	TFLint + tfsec (optional)	Static analysis in the workflow
+
+| Layer                  | Choice                                      | Notes                                                                |
+| ---------------------- | ------------------------------------------- | -------------------------------------------------------------------- |
+| **Storage**            | Amazon S3 (Standard or Intelligent-Tiering) | Source & destination buckets; versioning on for rollback             |
+| **Compute**            | AWS Lambda (Python 3.12 runtime)            | Uses **Pillow** to resize; concurrency = “On-Demand” (scale to zero) |
+| **Messaging**          | Amazon SNS                                  | Email, SMS, or webhook subscribers                                   |
+| **IaC**                | Terraform ≥ 1.6 + AWS provider ≥ 5.0        | Remote backend in S3 with DynamoDB state locking                     |
+| **CI**                 | GitHub Actions                              | Lints, validates, and plans before manual approval to apply          |
+| **Security & Quality** | TFLint + tfsec *(optional)*                 | Static analysis in the workflow                                      |
+
