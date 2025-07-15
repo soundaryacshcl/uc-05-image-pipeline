@@ -1,5 +1,4 @@
-# .github/workflows/uc-05-deploy.yml
-# UC‑05 – streamlined Terraform workflow (no TFLint / Checkov)
+
 name: UC-05 Deployment Workflow
 
 on:
@@ -46,14 +45,7 @@ jobs:
           role-to-assume: arn:aws:iam::767397779454:role/oidc-assume-role
           aws-region: ${{ env.AWS_REGION }}
 
-      # 3️⃣ Optional policy simulator (can be removed later)
-      - name: Simulate IAM permissions
-        run: |
-          aws iam simulate-principal-policy \
-            --policy-source-arn arn:aws:iam::767397779454:role/oidc-assume-role \
-            --action-names s3:CreateBucket sns:CreateTopic iam:CreateRole lambda:CreateFunction
-
-      # 4️⃣ Terraform workflow
+      # 3️⃣ Terraform workflow
       - name: Terraform FMT (check only)
         run: terraform fmt -recursive -check
 
