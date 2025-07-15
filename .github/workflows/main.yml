@@ -68,7 +68,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::874616579683:role/oidc-assume-role
+          role-to-assume: arn:aws:iam::767397779454:role/oidc-assume-role
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Format Terraform code
