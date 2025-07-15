@@ -1,28 +1,15 @@
-###############################
-# IAM Policy Module – Lambda #
-###############################
-#  Least‑privilege, workspace‑aware role and inline policy
-#  -------------------------------------------------------
-#  Variables expected (define these in variables.tf or higher‑level module):
-#    project           – e.g. "lambda-image-resize"
-#    source_bucket_arn – ARN of the **uploads** bucket (no trailing /*)
-#    dest_bucket_arn   – ARN of the **resized** bucket (no trailing /*)
-#    sns_topic_arn     – ARN of the SNS topic for notifications
-#
-#  Optionally set terraform workspaces to dev/stage/prod so names stay unique.
-###############################
-
 locals {
   name_prefix = "${var.project}-${terraform.workspace}"
 }
 
 ########################
-#  Trust Policy (STS)  #
+#  Trust Policy (STS)  #
 ########################
 
 data "aws_iam_policy_document" "assume_lambda" {
   statement {
     actions = ["sts:AssumeRole"]
+
     principals {
       type        = "Service"
       identifiers = ["lambda.amazonaws.com"]
@@ -31,7 +18,7 @@ data "aws_iam_policy_document" "assume_lambda" {
 }
 
 ############################
-#  IAM Role for the Lambda #
+#  IAM Role for the Lambda #
 ############################
 
 resource "aws_iam_role" "lambda" {
@@ -45,7 +32,7 @@ resource "aws_iam_role" "lambda" {
 }
 
 #########################################
-#  Least‑Privilege Inline Policy JSON   #
+#  Least‑Privilege Inline Policy JSON   #
 #########################################
 
 data "aws_iam_policy_document" "lambda_policy" {
@@ -54,7 +41,10 @@ data "aws_iam_policy_document" "lambda_policy" {
   statement {
     sid       = "S3ObjectAccess"
     effect    = "Allow"
-    actions   = ["s3:GetObject", "s3:PutObject"]
+    actions   = [
+      "s3:GetObject",
+      "s3:PutObject"
+    ]
     resources = [
       "${var.source_bucket_arn}/*",
       "${var.dest_bucket_arn}/*"
@@ -83,7 +73,7 @@ data "aws_iam_policy_document" "lambda_policy" {
 }
 
 #########################################
-#  Attach the inline policy to the role  #
+#  Attach the inline policy to the role #
 #########################################
 
 resource "aws_iam_role_policy" "lambda" {
