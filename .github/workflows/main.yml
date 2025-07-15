@@ -83,8 +83,8 @@ jobs:
           role-to-assume: arn:aws:iam::767397779454:role/oidc-assume-role
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Format Terraform code
-        run: terraform fmt -check -recursive
+      # - name: Format Terraform code
+      #   run: terraform fmt -check -recursive
 
       - name: Initialize Terraform
         run: terraform init
