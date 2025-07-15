@@ -1,5 +1,5 @@
 project            = "lambda-image-resize"
 region             = "us-east-1"
-source_bucket_name = "lambda-image-non-resize-july-17th"
-dest_bucket_name   = "lambda-image-resize-july-17th"
+source_bucket_name = "upload-img"
+dest_bucket_name   = "resized-img"
 subscription_email = "soundaryacshcl@gmail.com"
