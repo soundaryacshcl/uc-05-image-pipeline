@@ -1,0 +1,75 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {                 /* S3 bucket + object admin */
+      "Sid": "S3Admin",
+      "Effect": "Allow",
+      "Action": [
+        "s3:CreateBucket",
+        "s3:PutBucket*",
+        "s3:DeleteBucket",
+        "s3:ListBucket",
+        "s3:*Object*",
+        "s3:GetBucketLocation"
+      ],
+      "Resource": [
+        "arn:aws:s3:::*",
+        "arn:aws:s3:::*/*"            /* <- add object ARNs */
+      ]
+    },
+    {                 /* Lambda management */
+      "Sid": "LambdaAdmin",
+      "Effect": "Allow",
+      "Action": "lambda:*",
+      "Resource": "*"
+    },
+    {                 /* IAM for Lambda roles */
+      "Sid": "IAMPassAndCreate",
+      "Effect": "Allow",
+      "Action": [
+        "iam:CreateRole",
+        "iam:DeleteRole",
+        "iam:GetRole",
+        "iam:PutRolePolicy",
+        "iam:AttachRolePolicy",
+        "iam:PassRole",
+        "iam:UpdateAssumeRolePolicy"
+      ],
+      "Resource": "arn:aws:iam::767397779454:role/*"
+    },
+    {                 /* SNS topic create + publish */
+      "Sid": "SNSCreatePublish",
+      "Effect": "Allow",
+      "Action": [
+        "sns:CreateTopic",
+        "sns:DeleteTopic",
+        "sns:Subscribe",
+        "sns:Publish",
+        "sns:GetTopicAttributes",
+        "sns:SetTopicAttributes"
+      ],
+      "Resource": "arn:aws:sns:us-east-1:767397779454:*"
+    },
+    {                 /* Logs so Lambdas can write CloudWatch */
+      "Sid": "CloudWatchLogs",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "arn:aws:logs:us-east-1:767397779454:*"
+    },
+    {                 /* Remote‑state backend */
+      "Sid": "TerraformBackend",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject",
+        "dynamodb:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
