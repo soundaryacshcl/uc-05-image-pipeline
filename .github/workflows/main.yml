@@ -1,4 +1,4 @@
-name: UC-02 Terraform CI/CD Apply
+name: UC-05 Terraform CI/CD Apply
 
 on:
   workflow_dispatch:
